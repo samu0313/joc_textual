@@ -45,7 +45,8 @@ mostrar_submenu_ciudad() {
             1) echo -e "Exploras el mercado y ves muchos artículos.";sleep 2;cat mercado ;;
             2) echo -e "Entras a la taberna y escuchas rumores sobre una espada mágica.";sleep 2;cat Taberna ;;
             3) break ;;
-            *) echo "Opción no válida." ;;
+            *) respuesta_random=${respuestas_erroneas[$RANDOM % ${#respuestas_erroneas[@]}]}
+                echo -e "$respuesta_random" ;;
         esac
     done
 }
@@ -64,8 +65,9 @@ mostrar_submenu_bosque() {
             1) echo -e "Sigues el camino y llegas a una torre misteriosa.";cat torre; localizacion="torre"; mostrar_submenu_torre; return ;;
             2) echo -e "Encuentras un río cristalino y bebes agua.";cat rio ;;
             3) echo -e "Entras a la cabaña y descansas un momento.";cat Cabanya ;;
-            4) break ;;
-            *) echo "Opción no válida." ;;
+            4) localizacion="inicio	";break ;;
+            *)respuesta_random=${respuestas_erroneas[$RANDOM % ${#respuestas_erroneas[@]}]}
+                echo -e "$respuesta_random" ;;
         esac
     done
 }
@@ -80,8 +82,9 @@ mostrar_submenu_torre() {
         clear
         case $subopcion in
             1) abrir_cofre ;;
-            2) mostrar_submenu_bosque; return ;;
-            *) echo "Opción no válida." ;;
+            2) localizacion="bosque"; mostrar_submenu_bosque; return ;;
+    *)respuesta_random=${respuestas_erroneas[$RANDOM % ${#respuestas_erroneas[@]}]}
+                echo -e "$respuesta_random" ;;
         esac
     done
 }
@@ -109,9 +112,9 @@ comprobar_inventario() {
     else
         echo -e "Inventario: ${inventario[*]}"
     fi
-	case $subopcion in
-            1) mostrar_menu; return ;;
-        esac
+    case $subopcion in
+    	1) mostrar_menu; return ;;
+    esac
 }
 
 luchar() {
